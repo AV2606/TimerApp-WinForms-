@@ -556,10 +556,19 @@ namespace Timer
             try
             {
                 StopperRender?.Abort();
+                
             }
             catch(Exception)
             {
                 //return;
+            }
+            try
+            {
+                TimerRender?.Abort();
+            }
+            catch(Exception)
+            {
+
             }
         }
 

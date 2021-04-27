@@ -7,6 +7,7 @@ using System.Threading;
 //using System.Windows.Media;
 using Color = System.Drawing.Color;
 using System.Windows;
+//Version 0.1
 
 public static class Extensions
 {
@@ -306,11 +307,11 @@ public class Tools
     public static void DoNothin() { }
     public static class ThreadPool
     {
-        static Queue<Thread> pool;
+        static List<Thread> pool;
         /// <summary>
         /// The number of thread currently pooled.
         /// </summary>
-        public static int Threads
+        public static int ThreadsCount
         {
             get
             {
@@ -320,12 +321,45 @@ public class Tools
         /// <summary>
         /// Indicates wether to keep managing threads that finished execution or discard them, false by default.
         /// </summary>
-        public static bool KeepFinishedThreads { get; set; }
-        public static Thread[] Pool
+        public static bool KeepFinishedThreads
         {
             get
             {
-                return pool.ToArray();
+                return _keep_finished_threads;
+            }
+            set
+            {
+                _keep_finished_threads = value;
+                if (_keep_finished_threads == false)
+                {
+                    try
+                    {
+                        Service.Start();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Service?.Abort();
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+            }
+        }
+        private static bool _keep_finished_threads;
+        public static IReadOnlyList<Thread> Pool
+        {
+            get
+            {
+                return pool;
             }
         }
         private static Thread Service;
@@ -338,13 +372,12 @@ public class Tools
         /// <param name="Start">Indicates wether to start the <see cref="Thread"/> or not.</param>
         public static void Add(Thread t, bool Start = false)
         {
-            pool.Enqueue(t);
-            t.Priority = ThreadPriority.Highest;
+            pool.Add(t);
             if (Start)
                 t.Start();
         }
         /// <summary>
-        /// Adds thread secified by the <see cref="ThreadStart"/> 'ts' and by default start it.
+        /// Adds thread secified by the <see cref="ThreadStart"/> 'ts' and by default starts it.
         /// <para>The other overloads might not start it by default.</para>
         /// </summary>
         /// <param name="t">The <see cref="Thread"/> to add.</param>
@@ -356,52 +389,51 @@ public class Tools
             t.Name = Name;
             Add(t, Start);
         }
+        /// <summary>
+        /// Removes the thread from the pool and retrives it.
+        /// </summary>
+        /// <param name="t"></param>
+        /// <returns></returns>
         public static Thread Remove(Thread t)
         {
-            for (int i = 0; i < pool.Count; i++)
-            {
-                if (t == pool.Peek())
-                    return pool.Dequeue();
-                pool.Enqueue(pool.Dequeue());
-            }
-            return null;
+            var r = pool.Remove(t);
+            return r ? t : null;
         }
+        /// <summary>
+        /// Removes the thread from the pool and retrives it.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         public static Thread Remove(int index)
         {
-            var temp = new Queue<Thread>();
-            for (int i = 0; i < index; i++)
-                pool.Enqueue(pool.Dequeue());
-            var ret = pool.Dequeue();
-            foreach (Thread t in pool)
-                temp.Enqueue(t);
-            pool = temp;
-            return ret;
+            var r = pool.ElementAt(index);
+            pool.RemoveAt(index);
+            return r;
         }
         /// <summary>
         /// Waits for the whole pool to finish.
         /// </summary>
         public static void Join()
         {
-            foreach (Thread t in pool)
-                t.Join();
+            for (int i = 0; i < pool.Count; i++)
+                pool[i].Join();
         }
         /// <summary>
-        /// Waits until <see cref="Thread"/> t finishes.
+        /// Waits until <see cref="Thread"/> t finishes if the thread exists in the pool.
         /// </summary>
         /// <param name="t">The thread to wait until finish execution.</param>
         public static void Join(Thread t)
         {
-            foreach (Thread t1 in pool)
-                if (t1 == t)
-                    t1.Join();
+            var th=pool.Find((t1)=> { return t1 == t; });
+            th.Join();
         }
         /// <summary>
-        /// Waits until the <see cref="Thread"/> in the index location finishes.
+        /// Waits until the <see cref="Thread"/> in the index location finishes execution.
         /// </summary>
         /// <param name="index">The thread's index to wait until finish execution.</param>
         public static void Join(int index)
         {
-            pool.ElementAt(index).Join();
+            pool[index].Join();
         }
         /// <summary>
         /// Waits until the <see cref="Thread"/> with the name 'name' finishes.
@@ -410,33 +442,27 @@ public class Tools
         /// if there are nultiple threads with the same name it wait till they all are finishd.</para></param>
         public static void Join(string name)
         {
-            int maxi = pool.Count;
-            for (int i = 0; i < maxi; i++)
-            {
-                try
+            int length = pool.Count;
+            for(int i=0;i<length;i++)
+                if(pool[i].Name==name)
                 {
-                    if (pool.ElementAt(i).Name == name)
-                        pool.ElementAt(i).Join();
+                    pool[i].Join();
+                    return;
                 }
-                catch (Exception)
-                {
-
-                }
-            }
-
         }
-        public static Thread[] RemoveAllFinished()
+        /// <summary>
+        /// Removes all the threads that finished execution and reteives them.
+        /// <para>
+        /// Might be interrupted or give wrong data if <see cref="ThreadPool.KeepFinishedThreads"/> is set
+        /// to <see langword="false"/>.
+        /// </para>
+        /// </summary>
+        /// <returns></returns>
+        public static List<Thread> RemoveAllFinished()
         {
-            //Queue<Thread> finished = new Queue<Thread>();
-            int maxi = pool.Count;
-            for (int i = 0; i < maxi; i++)
-            {
-                if (pool.Peek().IsAlive == false)
-                    pool.Dequeue();
-                else
-                    pool.Enqueue(pool.Dequeue());
-            }
-            return pool.ToArray();
+            var r = pool;
+            pool = new List<Thread>();
+            return r;
         }
         /// <summary>
         /// Initialize the pool.
@@ -444,14 +470,13 @@ public class Tools
         /// </summary>
         public static void Initialize()
         {
-            if (pool == null)
-                pool = new Queue<Thread>();
+            if (pool is null)
+                pool = new List<Thread>();
             else
                 return;
-            KeepFinishedThreads = false;
             Service = new Thread(GCService);
             Service.Name = "GCService";
-            Service.Start();
+            KeepFinishedThreads = false;
         }
         /// <summary>
         /// Checks whether a thread finished execution and needs to to be discarted.
@@ -460,9 +485,14 @@ public class Tools
         {
         Start:
             while (!KeepFinishedThreads)
+            {
                 RemoveAllFinished();
+                Thread.Sleep(4);
+            }
             while (KeepFinishedThreads)
-                Tools.DoNothin();
+            {
+                Thread.Sleep(4);
+            }
             goto Start;
         }
     }
