@@ -1,0 +1,34 @@
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.Timer.resources
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.Properties.Resources.resources
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.csproj.GenerateResource.cache
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.csproj.CoreCompileInputs.cache
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.exe
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.pdb
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.csprojAssemblyReference.cache
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\bin\Debug\Timer.exe.config
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\bin\Debug\Timer.exe.manifest
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\bin\Debug\Timer.application
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\bin\Debug\Timer.exe
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\bin\Debug\Timer.pdb
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.exe.manifest
+C:\Users\Amit\Desktop\אביחי\Timer\Timer\obj\Debug\Timer.application
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Timer.exe.config
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Timer.exe.manifest
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Timer.application
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Timer.exe
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Timer.pdb
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.csprojAssemblyReference.cache
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.Timer.resources
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.Properties.Resources.resources
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.csproj.GenerateResource.cache
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.csproj.CoreCompileInputs.cache
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.exe.manifest
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.application
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.exe
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.pdb
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Syncfusion.Core.WinForms.dll
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Syncfusion.Licensing.dll
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Syncfusion.Shared.Base.dll
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Syncfusion.Core.WinForms.xml
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\bin\Debug\Syncfusion.Shared.Base.xml
+C:\Users\Amit\Desktop\Finished projects\Timer\Timer\obj\Debug\Timer.csproj.CopyComplete
