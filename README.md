@@ -1,5 +1,5 @@
 # TimerApp-WinForms-
-An UI Application that capable of stopper and timer functionalitys.
+An UI Application that capable of stopper and timer functionalities.
 
 Starts at the timer screen.
 
